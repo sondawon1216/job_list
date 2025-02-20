@@ -6,6 +6,8 @@ from time import sleep
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service  # 추가
+options = Options()
+options.add_argument('--headless')  # 옵션 추가 (헤드리스 모드)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 # 클래스 정의
 class Major:
