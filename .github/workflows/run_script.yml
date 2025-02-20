@@ -12,12 +12,12 @@ jobs:
 
     steps:
     - name: Checkout the code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python environment
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.8'  # 원하는 파이썬 버전으로 설정
+        python-version: "3.9"  # 원하는 파이썬 버전으로 설정
 
     - name: Install dependencies
       run: |
