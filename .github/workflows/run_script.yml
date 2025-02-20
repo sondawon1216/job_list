@@ -35,7 +35,13 @@ jobs:
       # Step 4: Chrome WebDriver 다운로드 (Chrome 133에 맞는 버전)
       - name: Download Chrome WebDriver
         run: |
-          CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          # 현재 설치된 Chrome 버전 확인
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+        
+          # Chrome 버전에 맞는 ChromeDriver 버전 다운로드
+          CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+        
+          # ChromeDriver 다운로드 및 설치
           wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/chromedriver
