@@ -26,6 +26,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install selenium
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install webdriver-manager  # 추가
 
       # Step 4: Chrome WebDriver 다운로드 (Chrome 133에 맞는 버전)
       - name: Download Chrome WebDriver
