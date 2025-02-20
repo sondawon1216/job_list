@@ -1,0 +1,36 @@
+name: Run Crawling Script Every Hour
+
+on:
+  schedule:
+    # 0 * * * * : 매 시간 정각마다 실행
+    - cron: '0 * * * *'
+  workflow_dispatch:  # 수동으로 실행할 수 있는 옵션을 추가
+
+jobs:
+  crawl_job:
+    runs-on: ubuntu-latest  # 우분투 환경에서 실행
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # 원하는 파이썬 버전으로 설정
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # requirements.txt 파일을 통해 의존성 설치
+
+    - name: Install Chrome and ChromeDriver
+      run: |
+        sudo apt update
+        sudo apt install -y google-chrome-stable
+        wget https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin
+
+    - name: Run the Crawling Script
+      run: |
+        python script.py  # 여기에 스크립트 파일 이름 입력
