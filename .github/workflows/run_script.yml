@@ -32,18 +32,16 @@ jobs:
           pip install -r requirements.txt
           pip install webdriver-manager  # 추가
 
-      # Step 4: Chrome WebDriver 다운로드 (Chrome 133에 맞는 버전)
+      # 4단계: Chrome WebDriver 다운로드 (Chrome 133에 맞는 버전)
       - name: Download Chrome WebDriver
         run: |
-          # 현재 설치된 Chrome 버전 확인
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          # Chrome 133 버전에 맞는 ChromeDriver 다운로드
+          wget https://chromedriver.storage.googleapis.com/133.0.6943.53/chromedriver_linux64.zip
         
-          # Chrome 버전에 맞는 ChromeDriver 버전 다운로드
-          CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-        
-          # ChromeDriver 다운로드 및 설치
-          wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
+          # ChromeDriver 압축 풀기
           unzip chromedriver_linux64.zip
+        
+          # ChromeDriver를 /usr/local/bin에 이동
           sudo mv chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
 
