@@ -48,6 +48,7 @@ options.add_argument("--headless")  # 헤드리스 모드로 실행
 options.add_argument("--no-sandbox")  # 일부 환경에서 필요함
 options.add_argument("--disable-dev-shm-usage")  # shared memory 사용 비활성화
 def main():
+    service = Service(ChromeDriverManager().install())
     # Chrome 웹 드라이버 열기
     driver = webdriver.Chrome(options=options)
     # 웹페이지 열기
