@@ -1,23 +1,23 @@
-name: Run Crawling Script Every Hour
+name: Generate CSV File
 
 on:
   schedule:
-    # 0 * * * * : 매 시간 정각마다 실행
+    # 매시간 실행
     - cron: '0 * * * *'
   workflow_dispatch:  # 수동으로 실행할 수 있는 옵션을 추가
 
 jobs:
-  crawl_job:
+  generate_csv:
     runs-on: ubuntu-latest  # 우분투 환경에서 실행
 
     steps:
-    - name: Checkout the code
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Python environment
       uses: actions/setup-python@v4
       with:
-        python-version: "3.9"  # 원하는 파이썬 버전으로 설정
+        python-version: '3.9'  # 원하는 Python 버전으로 설정
 
     - name: Install dependencies
       run: |
@@ -31,6 +31,14 @@ jobs:
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/local/bin
 
-    - name: Run the Crawling Script
+    - name: Run Python Script to Generate CSV
       run: |
-        python script.py  # 여기에 스크립트 파일 이름 입력
+        python generate_csv.py  # 크롤링을 통해 CSV를 생성하는 스크립트
+
+    - name: Commit and Push CSV File
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add job_data_S_*.csv  # 생성된 CSV 파일을 모두 추가
+        git commit -m "Update job data CSV files"
+        git push
