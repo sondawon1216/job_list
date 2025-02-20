@@ -1,27 +1,27 @@
-name: Generate CSV File
+name: Generate and Save CSV Files
 
 on:
   schedule:
-    # 매시간 실행
+    # 매시간 0분에 실행
     - cron: '0 * * * *'
-  workflow_dispatch:  # 수동으로 실행할 수 있는 옵션을 추가
+  workflow_dispatch:  # 수동 실행 가능
 
 jobs:
   generate_csv:
     runs-on: ubuntu-latest  # 우분투 환경에서 실행
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3  # 리포지토리 체크아웃
 
     - name: Set up Python environment
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # 원하는 Python 버전으로 설정
+        python-version: '3.9'  # Python 버전 설정
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt  # requirements.txt 파일을 통해 의존성 설치
+        pip install -r requirements.txt  # requirements.txt에서 의존성 설치
 
     - name: Install Chrome and ChromeDriver
       run: |
@@ -29,16 +29,16 @@ jobs:
         sudo apt install -y google-chrome-stable
         wget https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin
+        sudo mv chromedriver /usr/local/bin  # ChromeDriver 설치
 
-    - name: Run Python Script to Generate CSV
+    - name: Run Python script to generate CSV
       run: |
-        python generate_csv.py  # 크롤링을 통해 CSV를 생성하는 스크립트
+        python generate_csv.py  # 크롤링 스크립트를 실행하여 CSV 파일 생성
 
-    - name: Commit and Push CSV File
+    - name: Commit and push generated CSV files
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
-        git add job_data_S_*.csv  # 생성된 CSV 파일을 모두 추가
+        git add job_data_*.csv  # 생성된 모든 CSV 파일 추가
         git commit -m "Update job data CSV files"
-        git push
+        git push  # 변경 사항 푸시
