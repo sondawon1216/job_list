@@ -33,7 +33,7 @@ jobs:
 
     - name: Run Python script to generate CSV
       run: |
-        python generate_csv.py  # 크롤링 스크립트를 실행하여 CSV 파일 생성
+        python script.py  # 크롤링 스크립트를 실행하여 CSV 파일 생성
 
     - name: Commit and push generated CSV files
       run: |
