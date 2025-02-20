@@ -5,6 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service  # 추가
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 # 클래스 정의
 class Major:
