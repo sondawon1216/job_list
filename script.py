@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from time import sleep
+from selenium.webdriver.chrome.options import Options
+
 # 클래스 정의
 class Major:
     def __init__(self, title, semititle, job, loc):
@@ -37,8 +39,13 @@ def save_to_csv(data_list, filename="job_data.csv"):
     print(f"CSV 파일 '{filename}' 저장 완료!")
 # 자동 실행 처리
 def main():
+    options = Options()
+    options.add_argument("--headless")  # 헤드리스 모드로 실행
+    options.add_argument("--no-sandbox")  # 일부 환경에서 필요함
+    options.add_argument("--disable-dev-shm-usage")  # shared memory 사용 비활성화
+
     # Chrome 웹 드라이버 열기
-    driver = webdriver.Chrome()
+     driver = webdriver.Chrome(options=options)
     # 웹페이지 열기
     driver.get("https://www.jobkorea.co.kr/Top100/?Main_Career_Type=1&Search_Type=2&BizJobtype_Bctgr_Code=0&BizJobtype_Bctgr_Name=%EC%A0%84%EC%B2%B4&BizJobtype_Code=0&BizJobtype_Name=%EC%A0%84%EC%B2%B4&Major_Big_Code=5&Major_Big_Name=%EA%B3%B5%ED%95%99&Edu_Level_Code=9&Edu_Level_Name=%EC%A0%84%EC%B2%B4&Edu_Level_Name=%EC%A0%84%EC%B2%B4&MidScroll=0&duty-depth1=on")
     # "공학 전체"부터 "S-50"까지 순차적으로 클릭
